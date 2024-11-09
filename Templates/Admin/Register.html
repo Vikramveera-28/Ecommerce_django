@@ -1,0 +1,46 @@
+{% extends "Index.html" %}
+
+{% block title %}
+    Register Page
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="my-2 py-3">
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h3 class="text-secondary border-bottom">Register Now</h3>
+                </div>
+                <div class="col-6 mt-4">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <label class="form-label">User Name</label>
+                        {{ form.username }}
+                        <label class="form-label">User Email</label>
+                        {{ form.email }}
+                        <label class="form-label">Password</label>
+                        {{ form.password1 }}
+                        <label class="form-label">Comform Password</label>
+                        {{ form.password2 }}
+                        <button type="submit" class="btn btn-primary w-100 my-2">Register</button>
+                    </form>
+                </div>
+                <div class="col-6 mt-4">
+                    {% if form.error.username %}
+                        <label class="text-danger">{{ form.error.username }}</label>
+                    {% endif %}
+                    {% if form.error.email %}
+                        <label class="text-danger">{{ form.error.email }}</label>
+                    {% endif %}
+                    {% if form.error.password1 %}
+                        <label class="text-danger">{{ form.error.password1 }}</label>
+                    {% endif %}
+                    {% if form.error.password2 %}
+                        <label class="text-danger">{{ form.error.password2 }}</label>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

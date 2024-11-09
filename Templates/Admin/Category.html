@@ -1,0 +1,74 @@
+{% extends "Index.html" %}
+
+{% block title %}
+    Category Page
+{% endblock %}
+
+{% block content %}
+    <div class="container position-relative" style="min-height: 80vh">
+        <div class="my-2 py-3">
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <h3 class="text-secondary">Category Page</h3>
+                </div>
+                <div class="col-6 my-1 position-relative">
+                    <button type="button" class="btn btn-info position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create Category</button>
+                </div>
+                <div class="border border-1"></div>
+                {% include "Features/Message.html" %}
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr class="text-center">
+                                <th>Sl.No</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in information %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ data.name }}</td>
+                                    <td style="width: 5rem;"><a href="{{ data.image.url }}"><img src="{{ data.image.url }}" alt="Category" class="img-fluid"></a></td>
+                                    <td>{{ data.description }}</td>
+                                    {% if data.status %}
+                                        <td><input type="checkbox" class="form-check-input p-2" checked disabled></td>
+                                    {% else %}
+                                        <td><input type="checkbox" class="form-check-input p-2" disabled></td>
+                                    {% endif %}
+                                    <td><a href="{% url 'edit_category' data.id %}" class="btn btn-primary w-100 p-0 px-1">Edit</a></td>
+                                    <td><a href="{% url 'delete_category' data.id %}" class="btn btn-danger w-100 p-0 px-1">Delete</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {{ field.label_tag }}
+                            {{ field }}
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary w-100 my-2">New</button>
+                    </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}

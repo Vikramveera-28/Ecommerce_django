@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'admin_home' %}"><i class="fa fa-cart-plus"></i> E-Kart</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}"><i class="fa fa-sign-in"></i> {{ request.user }}</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'collection' %}"><i class="fa fa-shopping-cart"></i> Collection</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'favorite' %}"><i class="fa fa-heart"></i> Favorite</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'logout' %}"><i class="fa fa-cubes"></i> LogOut</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link active" href="{% url 'admin_home' %}"><i class="fa fa-home"></i> Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'category' %}"><i class="fa fa-cubes"></i> Category</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'product' %}"><i class="fa fa-cubes"></i> Product</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'register' %}"><i class="fa fa-sign-in"></i> Register</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'login' %}"><i class="fa fa-cubes"></i> LogIn</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

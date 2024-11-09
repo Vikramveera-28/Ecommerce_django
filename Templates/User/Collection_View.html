@@ -1,0 +1,47 @@
+{% extends "Index.html" %}
+
+{% block title %}
+    Collection Page
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="my-2 py-3">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-secondary border-bottom">{{ name }} Collections</h3>
+                    <form action="#" method="post" class="d-flex">
+                        {% csrf_token %}
+                        <select name="Vender" id="Vender" class="form-select">
+                            <option selected>Filter</option>
+                            {% for vender in venders %}
+                            <option value="{{vender}}">{{vender}}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">Sumbit</button>
+                    </form>
+                </div>
+                <div class="col-12 row g-5 container mt-5">
+                    {% for data in collection_datas %}
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <a href="{% url 'product_view' name data.name %}" style="text-decoration: none">
+                            <div class="card" style="height: 20rem">
+                                <div class="card-img d-flex justify-content-center align-items-center overflow-hidden" style="height: 15rem;">
+                                    <img src="{{ data.product_image.url }}" alt="" class="img-fluid">
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="lead text-center text-primary fw-bold">{{ data.name | slice:"0:12" | add:"..." }}</h4>
+                                    <p class="card-text">
+                                      <span class="float-start fw-bold text-danger text-decoration-line-through">Rs. {{ data.original_price | stringformat:'d' }}</span>
+                                      <span class="float-end fw-bold bg-success text-light p-1 rounded-2">Rs. {{ data.selling_price | stringformat:'d' }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

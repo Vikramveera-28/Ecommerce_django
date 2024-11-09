@@ -1,0 +1,56 @@
+{% extends "Index.html" %}
+
+{% block title %}
+    Cart Page
+{% endblock %}
+
+{% block content %}
+<section class="bg-light py-4 my-5" style="min-height: 500px">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-2 pb-2 border-bottom border-3">Cart</h4>
+            </div>
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Unit</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                    <tr>
+                        <td class="text-center"><a href="{{ item.product.product_image.url }}"><img src="{{ item.product.product_image.url }}" height="50px" alt="{{ item.product.name }}"></a></td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.product.selling_price | stringformat:'d' }}</td>
+                        <td>{{ item.product_qty }}</td>
+                        <td class="amt">{{ item.total_cost | stringformat:'d' }}</td>
+                        <td class="text-center"><a href="{% url 'removetocart' item.id %}" class="btn btn-danger" onclick="return confirm('Are you Sure to remove : {{ item.product.name }} cart')">Remove</a></td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><span class="float-end me-3">Total Amount</span></td>
+                        <td colspan="2" id="net">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script>
+    const nodes = document.querySelectorAll('.amt');
+    const arr = Array.from(nodes);
+    const res = arr.reduce((acc, curr) => {
+        return acc += Number(curr.textContent)
+    }, 0);
+    document.getElementById("net").innerHTML=`Rs : ${res}`;
+</script>
+{% endblock %}
