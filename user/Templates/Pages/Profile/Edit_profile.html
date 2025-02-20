@@ -1,0 +1,80 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    Edit Profile Page
+{% endblock %}
+
+{% block content %}
+<style>
+    .form-border{
+        min-width: 600px;
+    }
+</style>
+    <main class="container">
+        <h3 class="text-secondary border-bottom border-3 border-secondary pb-2 my-3">Edit {{Profile}}'s Profile</h3>
+        {% include 'Features/Message.html' %}
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <form method="post" enctype="multipart/form-data" class="border border-2 border-secondary-subtle form-border p-3 rounded-4 bg-light-subtle">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-3">
+                        <label for="image" class="form-label fw-bold">Profile Image :</label>
+                    </div>
+                    <div class="col-3">
+                        <img src="{{Profile.image.url}}" alt="{{Profile.user.userName}}" width="70"/>
+                    </div>
+                    <div class="col-6">
+                        <input type="file" name="image" id="image" class="form-control from-control-sm"/>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="mobile" class="form-label fw-bold">Mobile :</label>
+                    <input type="number" name="mobile" id="mobile" value="{{Profile.mobile}}" class="form-control"/>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <div class="mb-3">
+                            <label for="town" class="form-label fw-bold">Town :</label>
+                            <input type="text" name="town" id="town" value="{{Profile.town}}" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="mb-3">
+                            <label for="district" class="form-label fw-bold">District :</label>
+                            <input type="text" name="district" id="district" value="{{Profile.district}}" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <div class="mb-3">
+                            <label for="state" class="form-label fw-bold">State :</label>
+                            <input type="text" name="state" id="state" value="{{Profile.state}}" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="mb-3">
+                            <label for="pin" class="form-label fw-bold">Pin Code :</label>
+                            <input type="number" name="pin" id="pin" value="{{Profile.pin}}" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <div class="mb-3">
+                            <label for="cardNo" class="form-label fw-bold">Card No. :</label>
+                            <input type="number" name="cardNo" id="cardNo" value="{{Profile.card}}" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="mb-3">
+                            <label for="pinNo" class="form-label fw-bold">Pin No. :</label>
+                            <input type="number" name="pinNo" id="pinNo" value="{{Profile.card_pin}}" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Save" class="btn btn-primary w-100">
+            </form>
+        </div>
+    </main>
+{% endblock %}

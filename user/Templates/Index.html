@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ecommerce</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'Style/user_style.css' %}">
+    <script defer src="{% static 'Bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</head>
+<style>
+    .index-page{
+        width: 100vw;
+        height: 100vh;
+        background: url('{% static "Image/Background1.jpg" %}') center no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        backdrop-filter: brightness(30%);
+    }
+    .index-title{
+        font-size: 7rem;
+    }
+</style>
+<body class="index-page">
+    <div class="container">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <div class="d-flex flex-column">
+                <p class="index-title text-light text-center pt-4">Ecommerce</p>
+                <a href="{% url 'home' %}" class="btn btn-warning p-0">Start</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

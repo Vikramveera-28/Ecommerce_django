@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'Style/admin_style.css' %}">
+</head>
+<body class="bg-body-secondary">
+    {% include 'Features/Header.html' %}
+    {% block content %}
+    {% endblock %}
+    {% include 'Features/Footer.html' %}
+    <script src="{% static 'Bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

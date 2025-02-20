@@ -1,0 +1,15 @@
+{% if User %}
+<div class="bg-dark">
+  <footer class="container py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a href="{% url 'home' %}" class="nav-link text-light active" aria-current="page">{{User}}</a></li>
+      <li class="nav-item"><a href="{% url 'category' %}" class="nav-link text-light">Category</a></li>
+      <li class="nav-item"><a href="{% url 'cart' %}" class="nav-link text-light">Cart</a></li>
+      <li class="nav-item"><a href="{% url 'favorite' %}" class="nav-link text-light">Favorite</a></li>
+      <li class="nav-item"><a href="{% url 'order' %}" class="nav-link text-light">Order</a></li>
+      <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link text-light">Profile</a></li>
+    </ul>
+    <p class="text-center text-light"><a href="{% url 'admin' %}" class="text-decoration-none">&copy; 2024 Company, Inc</a></p>
+  </footer>
+</div>
+{% endif %}

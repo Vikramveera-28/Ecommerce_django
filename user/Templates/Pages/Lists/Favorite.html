@@ -1,0 +1,49 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    cart Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">Favorite</h3>
+        {% include 'Features/Message.html' %}
+        {% if Favorites %}
+        {% for fav in Favorites %}
+        <div class="card my-3">
+            <div class="row">
+                <div class="col-4">
+                    <div class="card-img d-flex justify-content-center align-items-center position-relative h-100">
+                        <img src="{{fav.product.image.url}}" alt="{{fav.product.name}}" width="150"/>
+                        {% if fav.product.treading %}
+                        <div class="bg-danger text-light position-absolute top-0 end-0 px-2 m-1 rounded-3">Hot</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">{{fav.product.name}} <span class="h6 text-secondary">( {{fav.product.vender}} )</span></h3>
+                        <p class="card-text">{{fav.product.descriptions | slice:'0:100' | add:'...'}}</p>
+                        <p class="float-end me-2">⭐ {{fav.product.rating}} Ratings</p>
+                        <p class="fw-bold">Amount: <span class="badge bg-success">Rs. {{fav.product.selling_price}} /-</span></p>
+                        {% if cart.product.emi %}
+                            <p class="fw-light"><span class="badge text-secondary">EMI available</span></p>
+                        {% else %}
+                            <p class="fw-light"><span class="badge text-secondary">EMI not available</span></p>
+                        {% endif %}
+                        <div class="btn-group w-100 border">
+                            <a href="{% url 'product_view' fav.product.category.name fav.product.name %}" class="btn btn-light">View</a>
+                            <a href="{% url 'remove_fav' fav.id %}" class="btn btn-danger">Remove</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <span class="text-danger display-3">Your Favorite is Empty</span>
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}

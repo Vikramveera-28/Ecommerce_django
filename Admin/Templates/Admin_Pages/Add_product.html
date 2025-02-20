@@ -1,0 +1,95 @@
+{% extends 'Admin_Base.html' %}
+
+{% block title %}
+    Add Products Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h2 class="text-primary border-bottom border-primary border-3 my-2 pb-2">Add Products</h2>
+        {% include 'Features/Message.html' %}
+        <div class="row">
+            <div class="">
+                <form method="post" enctype="multipart/form-data" class="border border-2 border-secondary-subtle form-border p-3 rounded-4 bg-light-subtle">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="category" class="form-label">Select Category :</label>
+                            <div class="mb-3">
+                                <select name="category" id="category" class="form-select">
+                                    {% for category in Category %}
+                                    <option value="{{category.name}}">{{category.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Product Name :</label>
+                                <input type="text" name="name" id="name" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="vender" class="form-label">Vender :</label>
+                                <input type="text" name="vender" id="vender" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image :</label>
+                                <input type="file" name="image" id="image" class="form-control"/>
+                                <label for="quantity" class="form-label">Quantity :</label>
+                                <input type="number" name="quantity" id="quantity" class="form-control"/>
+                                <label for="rating" class="form-label">Rating :</label>
+                                <input type="number" name="rating" id="rating" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="descriptions" class="form-label">Description :</label>
+                                <textarea name="descriptions" id="descriptions" class="form-control" cols="10" rows="7"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="originalPrice" class="form-label">Original Price :</label>
+                                <input type="number" name="originalPrice" id="originalPrice" class="form-control"/>
+                                <label for="sellingPrice" class="form-label">Selling Price :</label>
+                                <input type="number" name="sellingPrice" id="sellingPrice" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">EMI :</label><br>
+                            <div class="mb-3 d-flex flex-column gap-2">
+                                <input type="radio" name="emi" id="emi1" value=True class="btn-check"/>
+                                <label for="emi1" class="btn btn-outline-primary w-100">EMI</label>
+                                <input type="radio" name="emi" id="emi2" value=False class="btn-check"/>
+                                <label for="emi2" class="btn btn-outline-danger w-100">No EMI</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Show :</label><br>
+                            <div class="mb-3 d-flex flex-column gap-2">
+                                <input type="radio" name="status" id="status1" value=False class="btn-check"/>
+                                <label for="status1" class="btn btn-outline-primary w-100">Show</label>
+                                <input type="radio" name="status" id="status2" value=True class="btn-check"/>
+                                <label for="status2" class="btn btn-outline-danger w-100">Hide</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Treading :</label><br>
+                            <div class="mb-3 d-flex flex-column gap-2">
+                                <input type="radio" name="treading" id="treading1" value=True class="btn-check"/>
+                                <label for="treading1" class="btn btn-outline-primary w-100">Treading</label>
+                                <input type="radio" name="treading" id="treading2" value=False class="btn-check"/>
+                                <label for="treading2" class="btn btn-outline-danger w-100">Not Treading</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="Create" class="btn btn-primary w-100 my-3" />
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}

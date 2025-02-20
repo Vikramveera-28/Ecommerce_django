@@ -1,0 +1,11 @@
+.decoration{
+    text-decoration: none;
+}
+main{
+    min-height: 70vh;
+}
+.index-page{
+    width: 10vw;
+    height: 100vh;
+    background-image: url(../Image/Background1.jpg);
+}

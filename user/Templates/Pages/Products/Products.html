@@ -1,0 +1,31 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    category Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">{{Name}} Category</h3>
+        {% include 'Features/Message.html' %}
+        <div class="row gy-3 ani-opacity">
+            {% for product in Products %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="{% url 'product_view' product.category.name product.name %}" class="text-decoration-none">
+                    <div class="card ani-scroll">
+                        <div class="card-img p-3">
+                            <img src="{{product.image.url}}" alt="{{product.name}}" class="p-2" width="100%" height="250" />
+                        </div>
+                        <div class="card-header">
+                            <h3 class="card-title text-center text-primary">{{product.name | slice:"0:15" | add:"..."}}</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{product.descriptions | slice:"0:100" | add:"..."}}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}

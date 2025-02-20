@@ -1,0 +1,49 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    cart Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">Cart</h3>
+        {% include 'Features/Message.html' %}
+        {% if Carts %}
+            {% for cart in Carts %}
+            <div class="card my-3">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card-img d-flex justify-content-center align-items-center position-relative h-100">
+                            <img src="{{cart.product.image.url}}" alt="{{cart.product.name}}" width="150"/>
+                            {% if cart.product.treading %}
+                            <div class="bg-danger text-light position-absolute top-0 end-0 px-2 m-1 rounded-3">Hot</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h3 class="card-title text-center">{{cart.product.name}} <span class="h6 text-secondary">( {{cart.product.vender}} )</span></h3>
+                            <p class="card-text">{{cart.product.descriptions | slice:'0:100' | add:'...'}}</p>
+                            <p class="float-end me-2">⭐ {{cart.product.rating}} Ratings</p>
+                            <p class="fw-bold">Amount: <span class="badge bg-success">Rs. {{cart.product.selling_price}} /-</span></p>
+                            {% if cart.product.emi %}
+                                <p class="fw-light"><span class="badge text-secondary">EMI available</span></p>
+                            {% else %}
+                                <p class="fw-light"><span class="badge text-secondary">EMI not available</span></p>
+                            {% endif %}
+                            <div class="btn-group w-100 border">
+                                <a href="{% url 'product_view' cart.product.category.name cart.product.name %}" class="btn btn-light">View</a>
+                                <a href="{% url 'remove_cart' cart.id %}" class="btn btn-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <span class="text-danger display-3">Your Cart is Empty</span>
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}

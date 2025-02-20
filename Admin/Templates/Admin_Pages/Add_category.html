@@ -1,0 +1,38 @@
+{% extends 'Admin_Base.html' %}
+
+{% block title %}
+    Add Category Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h2 class="text-primary border-bottom border-primary border-3 my-2 pb-2">Add Category</h2>
+        {% include 'Features/Message.html' %}
+        <div class="row">
+            <div class="col-md-6">
+                <form method="post" enctype="multipart/form-data" class="border border-2 border-secondary-subtle form-border p-3 rounded-4 bg-light-subtle">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Category Name :</label>
+                        <input type="text" name="name" id="name" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image :</label>
+                        <input type="file" name="image" id="image" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descriptions" class="form-label">Description :</label>
+                        <textarea name="descriptions" id="descriptions" class="form-control" cols="10" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3 d-flex gap-3">
+                        <input type="radio" name="status" id="status1" value=False class="btn-check"/>
+                        <label for="status1" class="btn btn-outline-primary w-50">Show</label>
+                        <input type="radio" name="status" id="status2" value=True class="btn-check"/>
+                        <label for="status2" class="btn btn-outline-danger w-50">Hide</label>
+                    </div>
+                    <input type="submit" value="Create" class="btn btn-primary w-100 my-3" />
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}

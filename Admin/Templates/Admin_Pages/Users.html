@@ -1,0 +1,49 @@
+{% extends 'Admin_Base.html' %}
+
+{% block title %}
+    Admin Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h2 class="text-primary border-bottom border-primary border-3 my-2 pb-2">Users</h2>
+        {% include 'Features/Message.html' %}
+        {% if Details %}
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="text-center table-dark">
+                        <tr>
+                            <td>Sl.no.</td>
+                            <td>User Name</td>
+                            <td>Photograph</td>
+                            <td>Mobile No.</td>
+                            <td>Email</td>
+                            <td>District</td>
+                            <td>State</td>
+                            <td>Delete</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detail in Details %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{detail.user.userName}}</td>
+                            <td class="text-center"><img src="{{detail.image.url}}" alt="{{detail.user.userName}}" width="100" /></td>
+                            <td>{{detail.mobile}}</td>
+                            <td>{{detail.user.email}}</td>
+                            <td>{{detail.district}} - {{detail.pin}}</td>
+                            <td>{{detail.state}}</td>
+                            <td><a href="{% url 'delete_user' detail.id %}" class="btn btn-danger w-100">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <span class="text-danger display-3">No Users are registered</span>
+            </div>
+        {% endif %}
+
+    </main>
+{% endblock %}

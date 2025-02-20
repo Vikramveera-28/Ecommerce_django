@@ -1,0 +1,111 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    category Page
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <main class="container">
+        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">{{Product.name}}</h3>
+        {% include 'Features/Message.html' %}
+        <div class="card p-2 shadow-lg">
+            <div class="row h-100">
+                <div class="col-12 col-md-4 h-100">
+                    <div class="card-img d-flex justify-content-center align-items-center h-100 position-relative">
+                        {% if Product.treading %}
+                        <div class="bg-danger text-light position-absolute top-0 end-0 px-2 m-3 rounded-3">Hot</div>
+                        {% endif %}
+                        <a href="{{Product.image.url}}"><img src="{{Product.image.url}}" alt="name" class="p-2 mt-5" width="100%"/></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 h-100">
+                    <div class="card-header border-0">
+                        <h3 class="card-title text-primary">{{Product.name}}</h3>
+                        <h6 class="card-title text-secondary">{{Product.vender}}</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{Product.descriptions}}</p>
+                        <p class="card-text text-end text-primary">⭐{{Product.rating}} Rating</p>
+                        <p class="fw-bold">Original Price: <span class="badge bg-danger text-decoration-line-through">Rs. {{Product.original_price}}/-</span></p>
+                        <p class="fw-bold">Discount : <span class="text-secondary fs-5">{{Product.discount | stringformat:'d' | add:'%'}}</span> saving: <span class="text-secondary fs-5">Rs. {{Product.saving_amount | stringformat:'d'}}/-</span></p>                        <p class="fw-bold">Selling Price: <span class="badge bg-success">Rs. {{Product.selling_price}}/-</span></p>
+                        {% if Product.emi %}
+                            <p class="fw-light"><span class="badge text-secondary">EMI available</span></p>
+                        {% else %}
+                            <p class="fw-light"><span class="badge text-secondary">EMI not available</span></p>
+                        {% endif %}
+                        <p class="fw-light"><span class="badge text-danger">{{Product.quantity}} items are remaining</span></p>
+                        <div class="my-3">
+                            <div class="btn-group mb-3">
+                                <button class="btn btn-warning" id="btnMinus">-</button>
+                                <input type="number" name="quantity" id="txtqty" value="0" class="form-control rounded-0 text-center"/>
+                                <button class="btn btn-warning" id="btnPlus">+</button>
+                                <button class="btn btn-danger" id="fav" onclick="addFav()">❤</button>
+                            </div>
+                            <a href="" onclick="addCart()" class="btn btn-warning w-100 my-2~">Cart</a>
+                            <a href="" onclick="addOrder()" class="btn btn-warning w-100 my-2">Order</a>
+                        </div>
+                    </div>
+
+                    <div class="row gy-3">
+                        {% for relative in Relative %}
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <a href="{% url 'product_view' relative.category.name relative.name %}" class="text-decoration-none">
+                                <div class="card">
+                                    <div class="card-img">
+                                        <img src="{{relative.image.url}}" alt="{{relative.name}}" class="p-2" width="100%" height="150" />
+                                    </div>
+                                    <div class="card-header">
+                                        <h3 class="card-title text-center text-primary">{{relative.name}}</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const btnPlus = document.getElementById("btnPlus");
+        const btnMinus = document.getElementById("btnMinus");
+        const txtQty = document.getElementById("txtqty");
+
+        btnPlus.addEventListener("click", function() {
+            let qty = parseInt(txtQty.value, 10);
+            qty = isNaN(qty)?0:qty;
+            if(qty<10){
+                qty++;
+                txtQty.value= qty;
+            }
+        });
+
+        btnMinus.addEventListener("click", function() {
+            let qty = parseInt(txtQty.value, 10);
+            qty = isNaN(qty)?0:qty;
+            if(qty<10){
+                qty--;
+                txtQty.value= qty;
+            }
+        });
+
+        function addCart(){
+            let qty = document.getElementById("txtqty").value;
+            window.location.href = `{% url 'add_to_cart' Product.category.name Product.name %}?quantity=` + qty;
+        }
+
+        function addFav(){
+            let qty = 1;
+            window.location.href = `{% url 'add_fav' Product.category.name Product.name %}?quantity=` + qty;
+        }
+
+        function addOrder(){
+            let qty = document.getElementById("txtqty").value;
+            window.location.href = `{% url 'add_order' Product.category.name Product.name %}?quantity=` + qty;
+        }
+    </script>
+{% endblock %}
+
+const navigate = useNavigate()

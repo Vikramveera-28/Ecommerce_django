@@ -1,0 +1,25 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    Login Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h2 class="text-primary border-bottom border-primary border-3 my-2 pb-2">Login</h2>
+        {% include 'Features/Message.html' %}
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="my-3">
+                <label for="userName" class="form-label fw-bold">User Name</label>
+                <input type="text" name="userName" id="userName" class="form-control" />
+            </div>
+            <div class="my-3">
+                <label for="password" class="form-label fw-bold">Password</label>
+                <input type="password" name="password" id="password" class="form-control" />
+            </div>
+            <input type="submit" value="Login" class="btn btn-primary w-100" />
+            <p class="my-3">New User? <a href="{% url 'register' %}">Create new Account</a></p>
+        </form>
+    </main>
+{% endblock %}

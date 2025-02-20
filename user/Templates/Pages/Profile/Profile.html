@@ -1,0 +1,54 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    Profile Page
+{% endblock %}
+
+{% block content %}
+<style>
+</style>
+    <main class="container">
+        <h3 class="text-secondary border-bottom border-3 border-secondary pb-2">{{Profile.user.userName}}'s Profile</h3>
+        {% include 'Features/Message.html' %}
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="card">
+                    <div class="card-img text-center border-bottom p-2">
+                        <a href="{{Profile.image.url}}"><img src="{{Profile.image.url}}" alt="{{Profile.user.userName}}" class="rounded-circle img-fluid"  width="200" /></a>
+                        <span class="float-end"><a href="{% url 'edit_profile' Profile.id %}" class="btn btn-info">Edit</a></span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-secondary fw-bold border-bottom">Address :</h3>
+                        <p class="fs-6 ms-3">{{Profile.town}}<br/>{{Profile.district}}<br/>{{Profile.state}} - {{Profile.pin}}</p>
+                        <h3 class="text-secondary fw-bold border-bottom">Mobile :</h3>
+                        <p class="fs-6 ms-3">{{Profile.mobile}}</p>
+                        <h3 class="text-secondary fw-bold border-bottom">Email :</h3>
+                        <p class="fs-6 ms-3">{{Profile.user.email}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card h-100">
+                    <h3 class="text-secondary fw-bold my-2 ms-2">Amount: <span class="float-end"><a href="{% url 'add_amount' Amount.id %}" class="btn btn-info me-3">➕ Rs. 5000</a></span></h3>
+                    <h5 class="text-info my-2 ms-5">Total Amount: <span class="ms-3 text-secondary">Rs. {{Amount.amount}}/-</span></h5>
+                    <h5 class="text-info my-2 ms-5">Spand Amount: <span class="ms-3 text-secondary">Rs. {{Spand_amount}}/-</span></h5>
+                    <h3 class="text-secondary fw-bold my-2 ms-2">List:</h3>
+                    <div class="row m-5 border g-2">
+                        <div class="col-6">
+                            <a href="{% url 'cart' %}" class="btn btn-outline-dark w-100">Cart List</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'favorite' %}" class="btn btn-outline-dark w-100">Favorite List</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'order' %}" class="btn btn-outline-dark w-100">Order List</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'delivery' %}" class="btn btn-outline-dark w-100">Delivered List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,24 @@
+<header class="d-flex flex-wrap justify-content-center py-3 border-bottom bg-dark">
+  <a href="{% url 'home' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none text-light"><span class="fs-4 ms-5">Ecommerce</span></a>
+  <ul class="nav nav-pills me-4">
+    {% if User %}
+      <li class="nav-item"><a href="{% url 'home' %}" class="nav-link active" aria-current="page">{{User}}</a></li>
+      <li class="nav-item"><a href="{% url 'category' %}" class="nav-link">Category</a></li>
+      <li class="nav-item"><a href="{% url 'cart' %}" class="nav-link">Cart</a></li>
+      <li class="nav-item"><a href="{% url 'favorite' %}" class="nav-link">Favorite</a></li>
+      <li class="nav-item"><a href="{% url 'order' %}" class="nav-link">Order</a></li>
+      <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link">Profile</a></li>
+      <li class="nav-item"><a href="{% url 'logout' %}" class="btn btn-outline-primary">Log Out</a></li>
+    {% elif Admin %}
+      <li class="nav-item"><a href="{% url 'admin' %}" class="nav-link active">{{Admin}}</a></li>
+      <li class="nav-item"><a href="{% url 'admin_category' %}" class="nav-link">Category</a></li>
+      <li class="nav-item"><a href="{% url 'admin_product' %}" class="nav-link">Product</a></li>
+      <li class="nav-item"><a href="{% url 'user' %}" class="nav-link">User</a></li>
+      <li class="nav-item"><a href="{% url 'check_order' %}" class="nav-link">Order</a></li>
+      <li class="nav-item"><a href="{% url 'admin_logout' %}" class="btn btn-outline-primary">Log Out</a></li>
+    {% else %}
+      <li class="nav-item mx-2"><a href="{% url 'login' %}" class="btn btn-outline-primary">Log In</a></li>
+      <li class="nav-item mx-2"><a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a></li>
+    {% endif %}
+  </ul>
+</header>

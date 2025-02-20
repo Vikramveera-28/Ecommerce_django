@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'Style/user_style.css' %}">
+</head>
+<style>
+    .ani-scroll{
+        animation: fading linear;
+        animation-timeline: view();
+        animation-range: entry 0% cover 30%;
+    }
+    @keyframes fading {
+        from{
+            transform-origin: left;
+            scale: 0;
+            opacity: 0;
+        }
+        to{
+            transform-origin: right;
+            scale: 1;
+            opacity: 1;
+        }
+    }
+    .ani-opacity{
+        animation: opacity 1.5s linear;
+    }
+    @keyframes opacity {
+        from{opacity: 0;}
+        to{opacity: 1;}
+    }
+</style>
+<body class="bg-body-secondary">
+    {% include 'Features/Header.html' %}
+    {% block content %}
+    {% endblock %}
+    {% include 'Features/Footer.html' %}
+    <script src="{% static 'Bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

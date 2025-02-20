@@ -1,0 +1,31 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+{% include 'Features/Slider.html' %}
+    <main class="container">
+        {% include 'Features/Message.html' %}
+        <div class="row my-4 g-2">
+            <div class="col-12">
+        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">Treading Products</h3>
+            </div>
+            {% for treading in Products %}
+            <div class="col-6 col-md-3">
+                <a href="{% url 'product_view' treading.category.name treading.name %}" class="text-decoration-none">
+                    <div class="card ani-scroll">
+                        <div class="card-img text-center">
+                            <img src="{{treading.image.url}}" alt="{{treading.name}}" width="150" height="200"/>
+                        </div>
+                        <div class="card-header">
+                            <h3 class="text-center text-primary">{{treading.name}}</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}

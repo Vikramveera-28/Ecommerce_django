@@ -1,0 +1,40 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    Delivery Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        {% include 'Features/Message.html' %}
+        {% if Delivery %}
+            <div class="text-center">
+                <h1 class="text-success">Successfully Order</h1>
+                <h3 class="text-secondary">Item: {{Delivery.product.name}}</h3>
+            </div>
+        {% endif %}
+        <h4 class="text-secondary border-bottom border-3 pb-2 my-3">Previous Orders</h4>
+        <div class="row">
+            {% for item in Deliveries %}
+                <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                    <a href="{% url 'order_details' item.id %}" class="text-decoration-none">
+                        <div class="card">
+                            <div class="card-img text-center position-relative">
+                                <img src="{{item.product.image.url}}" alt="{{item.product.name}}" width="200" height="250"/>
+                                {% if item.delivery %}
+                                    <p class="position-absolute top-0 end-0 m-3 bg-success px-2 py-1 rounded-3">Delivery</p>
+                                {% else %}
+                                    <p class="position-absolute top-0 end-0 m-3 bg-danger px-2 py-1 rounded-3">Not Delivery</p>
+                                {% endif %}
+                            </div>
+                            <div class="card-header">
+                                <h4 class="text-center text-primary fw-bold">{{item.product.name | slice:"0:15" | add:'...'}}</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}
+

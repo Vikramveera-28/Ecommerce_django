@@ -1,0 +1,35 @@
+{% extends 'Admin_Base.html' %}
+
+{% block title %}
+    Admin Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h2 class="text-primary border-bottom border-primary border-3 my-2 pb-2">Admin</h2>
+        {% include 'Features/Message.html' %}
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <a href="{% url 'user' %}" class="text-decoration-none">
+                    <div class="card bg-primary-subtle d-flex justify-content-center align-items-center py-5 px-3">
+                        <span class="fw-bold display-5 text-primary"><span class="display-2 fw-bold">{{Users}}</span> User</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <a href="{% url 'admin_category' %}" class="text-decoration-none">
+                    <div class="card bg-danger-subtle d-flex justify-content-center align-items-center py-5 px-3">
+                        <span class="fw-bold display-5 text-danger"><span class="display-2 fw-bold">{{Categories}}</span> Categories</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <a href="{% url 'admin_product' %}" class="text-decoration-none">
+                    <div class="card bg-success-subtle d-flex justify-content-center align-items-center py-5 px-3">
+                        <span class="fw-bold display-5 text-success"><span class="display-2 fw-bold">{{Products}}</span> Products</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+{% endblock %}

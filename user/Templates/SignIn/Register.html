@@ -1,0 +1,33 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    Register Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <h2 class="text-primary border-bottom border-primary border-3 my-2 pb-2">Register</h2>
+        {% include 'Features/Message.html' %}
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <div class="my-3">
+                <label for="userName" class="form-label fw-bold">User Name</label>
+                <input type="text" name="userName" id="userName" class="form-control" {{Required}}/>
+            </div>
+            <div class="my-3">
+                <label for="email" class="form-label fw-bold">Email</label>
+                <input type="email" name="email" id="email" class="form-control" />
+            </div>
+            <div class="my-3">
+                <label for="password1" class="form-label fw-bold">Password</label>
+                <input type="password" name="password1" id="password1" class="form-control" />
+            </div>
+            <div class="my-3">
+                <label for="password2" class="form-label fw-bold">Confirm Password</label>
+                <input type="password" name="password2" id="password2" class="form-control" />
+            </div>
+            <input type="submit" value="Register" class="btn btn-primary w-100" />
+            <p class="my-3">Already have account? <a href="{% url 'login' %}">Log in</a></p>
+        </form>
+    </main>
+{% endblock %}

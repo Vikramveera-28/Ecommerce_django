@@ -1,0 +1,52 @@
+{% extends 'Base.html' %}
+
+{% block title %}
+    Order Details Page
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        {% include 'Features/Message.html' %}
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-header">
+                        <h4 class="text-secondary my-3">Item : <span class="text-dark fw-bold fs-2">{{Ordered.product.name}}</span></h4>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="card-img text-center">
+                        <a href="{{Ordered.product.image.url}}"><img src="{{Ordered.product.image.url}}" alt="{{Ordered.product.name}}" class="img-fluid"/></a>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="card-body">
+                        <p class="h2 text-primary">{{Ordered.product.name}} <span class="fs-5 text-secondary">({{Ordered.product.vender}})</span></p>
+                        <p class="fs-6">Descriptions: {{Ordered.product.descriptions | slice:"0:195" | add:' ...'}}</p>
+                        <p class="fs-6 text-secondary float-end">⭐{{Ordered.product.rating}} Rating</p>
+                        {% if Ordered.product.emi %}
+                            <p class="fw-light"><span class="text-secondary fw-bold">EMI Available</span></p>
+                        {% else %}
+                            <p class="fw-light"><span class="text-secondary fw-bold">EMI not Available</span></p>
+                        {% endif %}
+                        <p class="fs-6">Original Price: <span class="badge bg-info">Rs.{{Ordered.product.original_price | stringformat:"d"}}/- per item</span></p>
+                        <p class="fs-6">Total Price: <span class="badge bg-danger">Rs.{{Ordered.total_amount | stringformat:"d"}}/-</span></p>
+                        <p class="fs-6">Discount: <span class="badge bg-warning">{{Ordered.product.discount | stringformat:"d"}}%</span> reducing <span class="fs-6 badge bg-info">Rs. -{{Ordered.total_saving_amount | stringformat:"d"}}/-</span></p>
+                        <p class="fs-6">Selling Price: <span class="span badge bg-success">Rs.{{Ordered.total_price | stringformat:"d"}}/-</span></p>
+                        <p class="fs-6">Quantity: <span class="badge bg-info">{{Ordered.quantity}} items</span></p>
+                        {% if Ordered.payment %}
+                            <p class="fs-6">Payment: <span class="badge bg-success fw-bold">Paid</span></p>
+                        {% else %}
+                            <p class="fs-6">Payment: <span class="badge bg-danger fw-bold">Not Paid</span></p>
+                        {% endif %}
+                        {% if Ordered.delivery %}
+                            <p class="fs-6">Delivery: <span class="badge bg-success fw-bold">Delivery</span></p>
+                        {% else %}
+                            <p class="fs-6">Delivery: <span class="badge bg-danger fw-bold">Not Delivery</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
