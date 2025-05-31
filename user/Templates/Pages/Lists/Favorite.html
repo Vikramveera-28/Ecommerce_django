@@ -1,49 +1,127 @@
 {% extends 'Base.html' %}
 
 {% block title %}
-    cart Page
+    Favorite Page
 {% endblock %}
 
 {% block content %}
-    <main class="container">
-        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">Favorite</h3>
-        {% include 'Features/Message.html' %}
-        {% if Favorites %}
+<style>
+    .favorite-card {
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        transition: transform 0.18s, box-shadow 0.18s;
+        border: none;
+        background: #fff;
+        overflow: hidden;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+    .favorite-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+        border-color: #2563eb;
+    }
+    .favorite-img-wrap {
+        background: #f6f8fa;
+        padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 180px;
+        position: relative;
+        border-radius: 18px 0 0 18px;
+        height: 100%;
+    }
+    .favorite-img {
+        max-width: 100%;
+        max-height: 140px;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.07);
+        background: #fff;
+    }
+    .favorite-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin: 0.5rem 0 0.2rem 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #22223b;
+        letter-spacing: 1px;
+        border-bottom: 3px solid #2563eb !important;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    @media (max-width: 767px) {
+        .section-title {
+            font-size: 1.3rem;
+            padding-bottom: 0.3rem;
+        }
+        .favorite-title {
+            font-size: 1rem;
+            min-height: 36px;
+        }
+        .favorite-img-wrap {
+            min-height: 140px;
+        }
+    }
+</style>
+<main class="container">
+    <h3 class="section-title">Favorite</h3>
+    {% include 'Features/Message.html' %}
+    {% if Favorites %}
+    <div class="row">
         {% for fav in Favorites %}
-        <div class="card my-3">
-            <div class="row">
-                <div class="col-4">
-                    <div class="card-img d-flex justify-content-center align-items-center position-relative h-100">
-                        <img src="{{fav.product.image.url}}" alt="{{fav.product.name}}" width="150"/>
-                        {% if fav.product.treading %}
-                        <div class="bg-danger text-light position-absolute top-0 end-0 px-2 m-1 rounded-3">Hot</div>
+        <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="favorite-card h-100 d-flex flex-column">
+                <div class="favorite-img-wrap position-relative">
+                    <img src="{{fav.product.image.url}}" alt="{{fav.product.name}}" class="favorite-img"/>
+                    {% if fav.product.treading %}
+                        <span class="bg-danger text-light position-absolute top-0 end-0 px-2 m-1 rounded-3 small">Hot</span>
+                    {% endif %}
+                </div>
+                <div class="favorite-title">
+                    {{fav.product.name|slice:"0:18"|add:"..."}}
+                </div>
+                <div class="px-3 pb-3 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="text-secondary small mb-1 text-center">({{fav.product.vender}})</div>
+                        <div class="text-muted small mb-2">{{fav.product.descriptions|slice:"0:60"|add:"..."}}</div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">Rs. {{fav.product.selling_price}} /-</span>
+                            <span class="text-warning small">⭐ {{fav.product.rating}} Ratings</span>
+                        </div>
+                        {% if fav.product.emi %}
+                            <span class="badge text-secondary mb-2">EMI available</span>
+                        {% else %}
+                            <span class="badge text-secondary mb-2">EMI not available</span>
                         {% endif %}
                     </div>
-                </div>
-                <div class="col-8">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">{{fav.product.name}} <span class="h6 text-secondary">( {{fav.product.vender}} )</span></h3>
-                        <p class="card-text">{{fav.product.descriptions | slice:'0:100' | add:'...'}}</p>
-                        <p class="float-end me-2">⭐ {{fav.product.rating}} Ratings</p>
-                        <p class="fw-bold">Amount: <span class="badge bg-success">Rs. {{fav.product.selling_price}} /-</span></p>
-                        {% if cart.product.emi %}
-                            <p class="fw-light"><span class="badge text-secondary">EMI available</span></p>
-                        {% else %}
-                            <p class="fw-light"><span class="badge text-secondary">EMI not available</span></p>
-                        {% endif %}
-                        <div class="btn-group w-100 border">
-                            <a href="{% url 'product_view' fav.product.category.name fav.product.name %}" class="btn btn-light">View</a>
-                            <a href="{% url 'remove_fav' fav.id %}" class="btn btn-danger">Remove</a>
-                        </div>
+                    <div class="btn-group w-100 border mt-2">
+                        <a href="{% url 'product_view' fav.product.category.name fav.product.name %}" class="btn btn-light">View</a>
+                        <a href="{% url 'remove_fav' fav.id %}" class="btn btn-danger">Remove</a>
                     </div>
                 </div>
             </div>
         </div>
         {% endfor %}
-        {% else %}
-            <div class="text-center">
-                <span class="text-danger display-3">Your Favorite is Empty</span>
-            </div>
-        {% endif %}
-    </main>
+    </div>
+    {% else %}
+        <div class="text-center">
+            <span class="text-danger display-3">Your Favorite is Empty</span>
+        </div>
+    {% endif %}
+</main>
 {% endblock %}

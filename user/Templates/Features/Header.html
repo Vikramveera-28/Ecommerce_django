@@ -1,24 +1,56 @@
-<header class="d-flex flex-wrap justify-content-center py-3 border-bottom bg-dark">
-  <a href="{% url 'home' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none text-light"><span class="fs-4 ms-5">Ecommerce</span></a>
-  <ul class="nav nav-pills me-4">
+<header class="d-flex flex-wrap justify-content-center align-items-center py-3 border-bottom bg-dark shadow-sm" style="min-height:70px;">
+  <a href="{% url 'home' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none text-light" style="font-weight:700; letter-spacing:1px;">
+    <span class="fs-3 ms-4">Ecommerce</span>
+  </a>
+  <ul class="nav nav-pills me-4 align-items-center" style="gap:0.5rem;">
     {% if User %}
-      <li class="nav-item"><a href="{% url 'home' %}" class="nav-link active" aria-current="page">{{User}}</a></li>
-      <li class="nav-item"><a href="{% url 'category' %}" class="nav-link">Category</a></li>
-      <li class="nav-item"><a href="{% url 'cart' %}" class="nav-link">Cart</a></li>
-      <li class="nav-item"><a href="{% url 'favorite' %}" class="nav-link">Favorite</a></li>
-      <li class="nav-item"><a href="{% url 'order' %}" class="nav-link">Order</a></li>
-      <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link">Profile</a></li>
-      <li class="nav-item"><a href="{% url 'logout' %}" class="btn btn-outline-primary">Log Out</a></li>
+      <li class="nav-item">
+        <a href="{% url 'home' %}" class="nav-link active px-4" aria-current="page" style="border-radius:12px; font-weight:600;">{{User}}</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'category' %}" class="nav-link px-4" style="border-radius:12px;">Category</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'cart' %}" class="nav-link px-4" style="border-radius:12px;">Cart</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'favorite' %}" class="nav-link px-4" style="border-radius:12px;">Favorite</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'order' %}" class="nav-link px-4" style="border-radius:12px;">Order</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'profile' %}" class="nav-link px-4" style="border-radius:12px;">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'logout' %}" class="btn btn-outline-primary ms-2 px-4" style="border-radius:12px; font-weight:600;">Log Out</a>
+      </li>
     {% elif Admin %}
-      <li class="nav-item"><a href="{% url 'admin' %}" class="nav-link active">{{Admin}}</a></li>
-      <li class="nav-item"><a href="{% url 'admin_category' %}" class="nav-link">Category</a></li>
-      <li class="nav-item"><a href="{% url 'admin_product' %}" class="nav-link">Product</a></li>
-      <li class="nav-item"><a href="{% url 'user' %}" class="nav-link">User</a></li>
-      <li class="nav-item"><a href="{% url 'check_order' %}" class="nav-link">Order</a></li>
-      <li class="nav-item"><a href="{% url 'admin_logout' %}" class="btn btn-outline-primary">Log Out</a></li>
+      <li class="nav-item">
+        <a href="{% url 'admin' %}" class="nav-link active px-4" style="border-radius:12px; font-weight:600;">{{Admin}}</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'admin_category' %}" class="nav-link px-4" style="border-radius:12px;">Category</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'admin_product' %}" class="nav-link px-4" style="border-radius:12px;">Product</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'user' %}" class="nav-link px-4" style="border-radius:12px;">User</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'check_order' %}" class="nav-link px-4" style="border-radius:12px;">Order</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'admin_logout' %}" class="btn btn-outline-primary ms-2 px-4" style="border-radius:12px; font-weight:600;">Log Out</a>
+      </li>
     {% else %}
-      <li class="nav-item mx-2"><a href="{% url 'login' %}" class="btn btn-outline-primary">Log In</a></li>
-      <li class="nav-item mx-2"><a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a></li>
+      <li class="nav-item">
+        <a href="{% url 'login' %}" class="btn btn-outline-primary px-4 me-2" style="border-radius:12px; font-weight:600;">Log In</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'register' %}" class="btn btn-primary px-4" style="border-radius:12px; font-weight:600;">Sign Up</a>
+      </li>
     {% endif %}
   </ul>
 </header>

@@ -9,7 +9,30 @@
       <li class="nav-item"><a href="{% url 'order' %}" class="nav-link text-light">Order</a></li>
       <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link text-light">Profile</a></li>
     </ul>
-    <p class="text-center text-light"><a href="{% url 'admin' %}" class="text-decoration-none">&copy; 2024 Company, Inc</a></p>
+    <p class="text-center text-light"><a href="{% url 'admin' %}" class="text-decoration-none">&copy; 2024 Ecommerce, Inc</a></p>
+  </footer>
+</div>
+{% elif Admin %}
+<div class="bg-dark">
+  <footer class="container py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a href="{% url 'admin' %}" class="nav-link text-light active" aria-current="page">{{Admin}}</a></li>
+      <li class="nav-item"><a href="{% url 'admin_category' %}" class="nav-link text-light">Category</a></li>
+      <li class="nav-item"><a href="{% url 'admin_product' %}" class="nav-link text-light">Product</a></li>
+      <li class="nav-item"><a href="{% url 'user' %}" class="nav-link text-light">User</a></li>
+      <li class="nav-item"><a href="{% url 'check_order' %}" class="nav-link text-light">Order</a></li>
+    </ul>
+    <p class="text-center text-light"><a href="{% url 'admin' %}" class="text-decoration-none">&copy; 2024 Ecommerce, Inc</a></p>
+  </footer>
+</div>
+{% else %}
+<div class="bg-dark">
+  <footer class="container py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a href="{% url 'login' %}" class="nav-link text-light">Log In</a></li>
+      <li class="nav-item"><a href="{% url 'register' %}" class="nav-link text-light">Sign Up</a></li>
+    </ul>
+    <p class="text-center text-light"><a href="{% url 'admin' %}" class="text-decoration-none">&copy; 2024 Ecommerce, Inc</a></p>
   </footer>
 </div>
 {% endif %}

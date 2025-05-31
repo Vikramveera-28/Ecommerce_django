@@ -1,31 +1,141 @@
 {% extends 'Base.html' %}
 
 {% block title %}
-    category Page
+    {{ Name }} Category
 {% endblock %}
 
 {% block content %}
-    <main class="container">
-        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">{{Name}} Category</h3>
-        {% include 'Features/Message.html' %}
-        <div class="row gy-3 ani-opacity">
+<style>
+    .product-card {
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        transition: transform 0.18s, box-shadow 0.18s;
+        border: none;
+        background: #fff;
+        overflow: hidden;
+        min-height: 340px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .product-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+        border-color: #2563eb;
+    }
+    .product-img-wrap {
+        background: #f6f8fa;
+        padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 220px;
+    }
+    .product-img {
+        max-width: 100%;
+        max-height: 180px;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.07);
+        background: #fff;
+    }
+    .product-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin: 0.5rem 0 0.2rem 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .product-link {
+        text-decoration: none !important;
+        color: inherit;
+    }
+    .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #22223b;
+        letter-spacing: 1px;
+        border-bottom: 3px solid #2563eb !important;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(90deg, #2563eb11 0%, #fff 100%);
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.04);
+    }
+    .product-desc {
+        font-size: 0.97rem;
+        color: #444;
+        min-height: 60px;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+    @media (max-width: 767px) {
+        .section-title {
+            font-size: 1.3rem;
+            padding-bottom: 0.3rem;
+        }
+        .product-title {
+            font-size: 1rem;
+            min-height: 36px;
+        }
+        .product-img-wrap {
+            min-height: 140px;
+        }
+        .product-desc {
+            font-size: 0.92rem;
+            min-height: 40px;
+        }
+    }
+</style>
+<main class="container">
+    <h3 class="section-title">{{ Name }} Category</h3>
+    {% include 'Features/Message.html' %}
+    <div class="row my-4 g-4 ani-opacity">
+        {% if Products %}
             {% for product in Products %}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="{% url 'product_view' product.category.name product.name %}" class="text-decoration-none">
-                    <div class="card ani-scroll">
-                        <div class="card-img p-3">
-                            <img src="{{product.image.url}}" alt="{{product.name}}" class="p-2" width="100%" height="250" />
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+                <a href="{% url 'product_view' product.category.name product.name %}" class="product-link w-100">
+                    <div class="card product-card ani-scroll w-100 h-100">
+                        <div class="product-img-wrap">
+                            <img src="{{product.image.url}}" alt="{{product.name}}" class="product-img" />
                         </div>
-                        <div class="card-header">
-                            <h3 class="card-title text-center text-primary">{{product.name | slice:"0:15" | add:"..."}}</h3>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{product.descriptions | slice:"0:100" | add:"..."}}</p>
+                        <div class="card-body p-2">
+                            <div class="product-title">
+                                {% if product.name|length > 18 %}
+                                    {{ product.name|slice:"0:18" }}...
+                                {% else %}
+                                    {{ product.name }}
+                                {% endif %}
+                            </div>
+                            <div class="product-desc">
+                                {% if product.descriptions %}
+                                    {% if product.descriptions|length > 80 %}
+                                        {{ product.descriptions|slice:"0:80" }}...
+                                    {% else %}
+                                        {{ product.descriptions }}
+                                    {% endif %}
+                                {% else %}
+                                    <span class="text-muted">No description available.</span>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </a>
             </div>
             {% endfor %}
-        </div>
-    </main>
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info text-center my-5 py-4">
+                    <i class="bi bi-emoji-frown fs-2"></i><br>
+                    <span class="fw-semibold">No products available in this category.</span>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</main>
 {% endblock %}

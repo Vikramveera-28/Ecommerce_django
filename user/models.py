@@ -11,6 +11,8 @@ def get_file_name(request, file_Name):
 
 
 class UserId(models.Model):
+    class Meta:
+        app_label = 'user'
     userName = models.CharField(max_length=100, null=False, blank=False, unique=True)
     password = models.CharField(max_length=100, null=False, blank=False)
     email = models.EmailField(max_length=100, null=False, blank=False)

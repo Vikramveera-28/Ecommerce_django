@@ -5,21 +5,101 @@
 {% endblock %}
 
 {% block content %}
-    <main class="container">
-        <h2 class="text-primary border-bottom border-primary border-3 my-2 pb-2">Login</h2>
-        {% include 'Features/Message.html' %}
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <div class="my-3">
-                <label for="userName" class="form-label fw-bold">User Name</label>
-                <input type="text" name="userName" id="userName" class="form-control" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: auto
+        }
+        body, .bg-flat {
+            background: #f6f8fa !important;
+            height: 100vh;
+            min-height: 100vh;
+            width: 100vw;
+        }
+        .main-login-fixed {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .flat-card {
+            background: #fff;
+            border-radius: 18px;
+            border: 1.5px solid #e0e0e0;
+            padding: 2.5rem 2rem;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+        }
+        .flat-input {
+            border-radius: 10px;
+            border: 1.5px solid #d1d5db;
+            font-size: 1.1rem;
+            padding: 0.85rem 1rem;
+            background: #f3f4f6;
+        }
+        .flat-input:focus {
+            border-color: #2563eb;
+            background: #e0e7ff;
+            outline: none;
+        }
+        .flat-btn {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 0.85rem 1rem;
+            margin-top: 0.5rem;
+            transition: background 0.2s;
+        }
+        .flat-btn:hover {
+            background: #1d4ed8;
+        }
+        .brand-flat {
+            font-weight: 800;
+            font-size: 2rem;
+            color: #2563eb;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        .flat-link {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .flat-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <div class="main-login-fixed">
+        <div class="flat-card">
+            <div class="text-center mb-4">
+                <span class="brand-flat">YourBrand</span>
             </div>
-            <div class="my-3">
-                <label for="password" class="form-label fw-bold">Password</label>
-                <input type="password" name="password" id="password" class="form-control" />
-            </div>
-            <input type="submit" value="Login" class="btn btn-primary w-100" />
-            <p class="my-3">New User? <a href="{% url 'register' %}">Create new Account</a></p>
-        </form>
-    </main>
+            <h4 class="text-dark mb-4 fw-bold text-center">Login</h4>
+            {% include 'Features/Message.html' %}
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="userName" class="form-label fw-semibold">User Name</label>
+                    <input type="text" name="userName" id="userName" class="form-control flat-input" placeholder="Enter your username" required />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-semibold">Password</label>
+                    <input type="password" name="password" id="password" class="form-control flat-input" placeholder="Enter your password" required />
+                </div>
+                <button type="submit" class="flat-btn w-100">Login</button>
+                <div class="text-center mt-3">
+                    <span class="text-muted">New User?</span> <a href="{% url 'register' %}" class="flat-link">Create new Account</a>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

@@ -5,72 +5,140 @@
 {% endblock %}
 
 {% block content %}
-    <main class="container">
-        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">{{Product.product.name}} Payment Section</h3>
-        {% include 'Features/Message.html' %}
-        <div class="row g-3">
-            <div class="col-12 col-md-6">
-                <div class="card">
-                    <div class="card-img text-center">
-                        <img src="{{Product.product.image.url}}" alt="{{Product.product.name}}" class="img-fluid"/>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="text-dark border-bottom border-dark border-3">{{Product.product.name}} <span class="text-secondary h6">({{Product.product.vender}})</span></h4>
-                        <h5 class="text-secondary">No. of Product: <span class="text-dark">{{Product}} {{Product.product.category.name}}</span></h5>
-                        {% if cart.product.emi %}
-                            <p class="fw-light"><span class="badge text-secondary">EMI available</span></p>
-                        {% else %}
-                            <p class="fw-light"><span class="badge text-secondary">EMI not available</span></p>
-                        {% endif %}
-                        <h5 class="text-secondary">Price: <span class="badge bg-primary">Rs. {{Product.total_price}}/-</span></h5>
-                        <h5 class="text-secondary">Saving Price: <span class="badge bg-success">Rs. {{Product.total_saving_amount}}/-</span></h5>
-                        <h5 class="text-secondary">Discount: <span class="badge bg-success">{{Product.product.discount}}%</span></h5>
-
-                    </div>
+<style>
+    .payment-card {
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        transition: transform 0.18s, box-shadow 0.18s;
+        border: none;
+        background: #fff;
+        overflow: hidden;
+        min-height: 340px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .payment-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+        border-color: #2563eb;
+    }
+    .payment-img-wrap {
+        background: #f6f8fa;
+        padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 220px;
+    }
+    .payment-img {
+        max-width: 100%;
+        max-height: 180px;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.07);
+        background: #fff;
+    }
+    .payment-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin: 0.5rem 0 0.2rem 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #22223b;
+        letter-spacing: 1px;
+        border-bottom: 3px solid #2563eb !important;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(90deg, #2563eb11 0%, #fff 100%);
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.04);
+    }
+    @media (max-width: 767px) {
+        .section-title {
+            font-size: 1.3rem;
+            padding-bottom: 0.3rem;
+        }
+        .payment-title {
+            font-size: 1rem;
+            min-height: 36px;
+        }
+        .payment-img-wrap {
+            min-height: 140px;
+        }
+    }
+</style>
+<main class="container">
+    <h3 class="section-title">{{Product.product.name}} Payment Section</h3>
+    {% include 'Features/Message.html' %}
+    <div class="row my-4 g-4">
+        <div class="col-12 col-md-6 d-flex">
+            <div class="card payment-card w-100 h-100">
+                <div class="payment-img-wrap">
+                    <img src="{{Product.product.image.url}}" alt="{{Product.product.name}}" class="payment-img" />
                 </div>
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="card h-100">
-                    <div class="card-body">
-                         <h4 class="text-dark border-bottom border-dark border-3 pb-2"> Delivery Address:</h4>
-                        <p class="h6 text-secondary ms-3">{{Address.town}},</p>
-                        <p class="h6 text-secondary ms-3">{{Address.district}},</p>
-                        <p class="h6 text-secondary ms-3">{{Address.state}}.  {{Address.pin}}.</p>
-                        <p class="h6 text-secondary ms-3"><a href="tel:+91{{Address.mobile}}" class="text-decoration-none text-secondary">{{Address.mobile}}</a>.</p>
-                        <p class="h6 text-secondary ms-3"><a href="mailto:{{Address.user.email}}" class="text-decoration-none text-secondary">{{Address.user.email}}</a></p>
-                         <h4 class="text-dark border-bottom border-dark border-3 pb-2 mt-5">Amount:</h4>
-                        <p class="h6 text-secondary ms-3">{{Amount.amount}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card pb-3">
-                    <div class="row">
-                        <div class="col-6">
-                            <form action="{% url 'payment' Product.id %}" method="POST">
-                                {% csrf_token %}
-                                <h4 class="text-dark border-bottom border-dark border-3 pb-2 ms-3 my-3">Payment for Debit Card:</h4>
-                                <p class="h6 text-secondary ms-3">Enter your debit card number:</p>
-                                <div class="d-flex w-50 border m-3">
-                                    {% csrf_token %}
-                                    <input type="text" class="form-control border-0 text-center rounded-0" value="XXXX" readonly/>
-                                    <input type="text" class="form-control border-0 text-center rounded-0" value="XXXX" readonly/>
-                                    <input type="text" class="form-control border-0 text-center rounded-0" value="XXXX" readonly/>
-                                    <input type="text" class="form-control border-0 text-center rounded-0" name="cardNo" id="cardNo" placeholder="XXXX" maxlength="4" />
-                                </div>
-                                <p class="h6 text-secondary ms-3">Enter your debit card Pin:</p>
-                                <div class="w-50 ms-3">
-                                    {% csrf_token %}
-                                    <input type="text" class="w-50 form-control text-center rounded-0" name="pinNo" id="pinNo" placeholder="XXXX" maxlength="4" />
-                                </div>
-                                <input type="submit" value="Pay" class="btn btn-primary w-100 m-3">
-                            </form>
-                        </div>
-                        <div class="col-6"></div>
-                    </div>
+                <div class="card-body p-3">
+                    <div class="payment-title">{{Product.product.name}} <span class="text-secondary h6 ms-2">({{Product.product.vender}})</span></div>
+                    <h5 class="text-secondary mt-3">No. of Product: <span class="text-dark">{{Product}} {{Product.product.category.name}}</span></h5>
+                    {% if cart.product.emi %}
+                        <p class="fw-light mt-2"><span class="badge text-secondary">EMI available</span></p>
+                    {% else %}
+                        <p class="fw-light mt-2"><span class="badge text-secondary">EMI not available</span></p>
+                    {% endif %}
+                    <h5 class="text-secondary mt-3">Price: <span class="badge bg-primary">Rs. {{Product.total_price}}/-</span></h5>
+                    <h5 class="text-secondary mt-2">Saving Price: <span class="badge bg-success">Rs. {{Product.total_saving_amount}}/-</span></h5>
+                    <h5 class="text-secondary mt-2">Discount: <span class="badge bg-success">{{Product.product.discount}}%</span></h5>
                 </div>
             </div>
         </div>
-    </main>
+        <div class="col-12 col-md-6 d-flex">
+            <div class="card payment-card w-100 h-100">
+                <div class="card-body p-3">
+                    <h4 class="text-dark border-bottom border-dark border-3 pb-2 mb-3">Delivery Address:</h4>
+                    <p class="h6 text-secondary ms-3 mb-1">{{Address.town}},</p>
+                    <p class="h6 text-secondary ms-3 mb-1">{{Address.district}},</p>
+                    <p class="h6 text-secondary ms-3 mb-1">{{Address.state}}.  {{Address.pin}}.</p>
+                    <p class="h6 text-secondary ms-3 mb-1"><a href="tel:+91{{Address.mobile}}" class="text-decoration-none text-secondary">{{Address.mobile}}</a>.</p>
+                    <p class="h6 text-secondary ms-3 mb-3"><a href="mailto:{{Address.user.email}}" class="text-decoration-none text-secondary">{{Address.user.email}}</a></p>
+                    <h4 class="text-dark border-bottom border-dark border-3 pb-2 mt-4 mb-2">Amount:</h4>
+                    <p class="h6 text-secondary ms-3">{{Amount.amount}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card payment-card pb-3">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <form action="{% url 'payment' Product.id %}" method="POST" class="p-3">
+                            {% csrf_token %}
+                            <h4 class="text-dark border-bottom border-dark border-3 pb-2 mb-3">Payment for Debit Card:</h4>
+                            <p class="h6 text-secondary mb-2">Enter your debit card number:</p>
+                            <div class="d-flex w-100 border mb-3">
+                                <input type="text" class="form-control border-0 text-center rounded-0" value="XXXX" readonly/>
+                                <input type="text" class="form-control border-0 text-center rounded-0" value="XXXX" readonly/>
+                                <input type="text" class="form-control border-0 text-center rounded-0" value="XXXX" readonly/>
+                                <input type="text" class="form-control border-0 text-center rounded-0" name="cardNo" id="cardNo" placeholder="XXXX" maxlength="4" />
+                            </div>
+                            <p class="h6 text-secondary mb-2">Enter your debit card Pin:</p>
+                            <div class="w-50 mb-3">
+                                <input type="text" class="form-control text-center rounded-0" name="pinNo" id="pinNo" placeholder="XXXX" maxlength="4" />
+                            </div>
+                            <input type="submit" value="Pay" class="btn btn-primary w-100">
+                        </form>
+                    </div>
+                    <div class="col-12 col-md-6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}
-

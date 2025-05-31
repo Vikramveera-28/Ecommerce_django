@@ -9,18 +9,3 @@ main{
     height: 100vh;
     background-image: url(../Image/Background1.jpg);
 }
-.card-fading{
-    animation: fading 2s linear;
-    animation-timeline: view();
-    animation-range: entry 0% cover 30%;
-}
-@keyframes fading {
-    from{
-        transform: translateY(100px);
-        opacity: 0;
-    }
-    to{
-        transform: translateY(0);
-        opacity: 1;
-    }
-}

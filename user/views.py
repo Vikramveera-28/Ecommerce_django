@@ -4,7 +4,6 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
-
 # ------------------------------ Functions ------------------------------
 def login_confirmation(func):
     def inner(request, *args, **kwargs):

@@ -1,37 +1,118 @@
 {% extends 'Base.html' %}
 
 {% block title %}
-    cart Page
+    Cart Page
 {% endblock %}
 
 {% block content %}
-    <main class="container">
-        <h3 class="text-secondary border-bottom border-secondary border-3 py-2">Cart</h3>
-        {% include 'Features/Message.html' %}
-        {% if Carts %}
-            {% for cart in Carts %}
-            <div class="card my-3">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="card-img d-flex justify-content-center align-items-center position-relative h-100">
-                            <img src="{{cart.product.image.url}}" alt="{{cart.product.name}}" width="150"/>
-                            {% if cart.product.treading %}
-                            <div class="bg-danger text-light position-absolute top-0 end-0 px-2 m-1 rounded-3">Hot</div>
-                            {% endif %}
-                        </div>
+<style>
+    .cart-card {
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        transition: transform 0.18s, box-shadow 0.18s;
+        border: none;
+        background: #fff;
+        overflow: hidden;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        height: 100%;
+        padding-inline: 1.5rem;
+    }
+    .cart-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+        border-color: #2563eb;
+    }
+    .cart-img-wrap {
+        background: #f6f8fa;
+        padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 180px;
+        position: relative;
+        border-radius: 18px 0 0 18px;
+        height: 100%;
+    }
+    .cart-img {
+        max-width: 100%;
+        max-height: 140px;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.07);
+        background: #fff;
+    }
+    .cart-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin: 0.5rem 0 0.2rem 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #22223b;
+        letter-spacing: 1px;
+        border-bottom: 3px solid #2563eb !important;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(90deg, #2563eb11 0%, #fff 100%);
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.04);
+    }
+    @media (max-width: 767px) {
+        .section-title {
+            font-size: 1.3rem;
+            padding-bottom: 0.3rem;
+        }
+        .cart-title {
+            font-size: 1rem;
+            min-height: 28px;
+        }
+        .cart-img-wrap {
+            min-height: 100px;
+        }
+    }
+</style>
+<main class="container">
+    <h3 class="section-title">Cart</h3>
+    {% include 'Features/Message.html' %}
+    {% if Carts %}
+        <div class="row g-4">
+        {% for cart in Carts %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="cart-card d-flex flex-column ani-scroll h-100">
+                    <div class="cart-img-wrap d-flex justify-content-center align-items-center position-relative">
+                        <img src="{{cart.product.image.url}}" alt="{{cart.product.name}}" class="cart-img" />
+                        {% if cart.product.treading %}
+                        <div class="bg-danger text-light position-absolute top-0 end-0 px-2 m-1 rounded-3">Hot</div>
+                        {% endif %}
                     </div>
-                    <div class="col-8">
+                    <div class="d-flex flex-column justify-content-between flex-grow-1">
                         <div class="card-body">
-                            <h3 class="card-title text-center">{{cart.product.name}} <span class="h6 text-secondary">( {{cart.product.vender}} )</span></h3>
-                            <p class="card-text">{{cart.product.descriptions | slice:'0:100' | add:'...'}}</p>
-                            <p class="float-end me-2">⭐ {{cart.product.rating}} Ratings</p>
-                            <p class="fw-bold">Amount: <span class="badge bg-success">Rs. {{cart.product.selling_price}} /-</span></p>
-                            {% if cart.product.emi %}
-                                <p class="fw-light"><span class="badge text-secondary">EMI available</span></p>
-                            {% else %}
-                                <p class="fw-light"><span class="badge text-secondary">EMI not available</span></p>
-                            {% endif %}
-                            <div class="btn-group w-100 border">
+                            <div class="cart-title">{{cart.product.name}} <span class="h6 text-secondary">({{cart.product.vender}})</span></div>
+                            <p class="card-text">{{cart.product.descriptions|slice:'0:100'|add:'...'}}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span class="fw-bold">Amount: <span class="badge bg-success">Rs. {{cart.product.selling_price}} /-</span></span>
+                                <span class="text-secondary">⭐ {{cart.product.rating}} Ratings</span>
+                            </div>
+                            <div class="mt-2">
+                                {% if cart.product.emi %}
+                                    <span class="badge text-secondary">EMI available</span>
+                                {% else %}
+                                    <span class="badge text-secondary">EMI not available</span>
+                                {% endif %}
+                            </div>
+                            <div class="btn-group w-100 border mt-3">
                                 <a href="{% url 'product_view' cart.product.category.name cart.product.name %}" class="btn btn-light">View</a>
                                 <a href="{% url 'remove_cart' cart.id %}" class="btn btn-danger">Remove</a>
                             </div>
@@ -39,11 +120,12 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
-        {% else %}
-            <div class="text-center">
-                <span class="text-danger display-3">Your Cart is Empty</span>
-            </div>
-        {% endif %}
-    </main>
+        {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center my-5">
+            <span class="text-danger display-3">Your Cart is Empty</span>
+        </div>
+    {% endif %}
+</main>
 {% endblock %}
